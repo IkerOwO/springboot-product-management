@@ -44,9 +44,13 @@ public class ProductService {
 
     // Crear producto
     @Transactional
-    public void createProduct(String name, double price, int stock){
-        Product newProduct = new Product(null, name, price, stock);
-        repository.save(newProduct);   
+    public void createProduct(Product product){
+        // Comprobamos que no existe el producto introducido
+        Optional<Product> prOptional = repository.findById(product.getId());
+        if (prOptional.isPresent()){
+            throw new IllegalStateException("El producto ya existe");
+        }
+        repository.save(product);   
     }
 
 }
