@@ -53,4 +53,13 @@ public class ProductService {
         repository.save(product);   
     }
 
+    // Update del Stock
+    public void updateStock(Product product, int newStock){
+        Optional<Product> prOptional = repository.findById(product.getId());
+        if (prOptional.isPresent()){
+            product.setStock(newStock);
+        }
+        repository.save(product);
+    }
+
 }
